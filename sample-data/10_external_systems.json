@@ -1,0 +1,74 @@
+[
+  {
+    "system_id": 1,
+    "system_name": "生産管理システム",
+    "system_type": "ERP",
+    "connection_string": "Server=erp-db.yamada-mfg.local;Database=ProductionDB;Integrated Security=true",
+    "api_endpoint": "https://erp.yamada-mfg.local/api/v1",
+    "authentication_type": "Bearer Token",
+    "status": "接続中",
+    "last_sync": "2024-03-15T09:30:00Z",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "system_id": 2,
+    "system_name": "製造実行システム",
+    "system_type": "MES",
+    "connection_string": "Server=mes-db.yamada-mfg.local;Database=MESDB;Integrated Security=true",
+    "api_endpoint": "https://mes.yamada-mfg.local/api/v2",
+    "authentication_type": "API Key",
+    "status": "接続中",
+    "last_sync": "2024-03-15T09:25:00Z",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-03-15T09:25:00Z"
+  },
+  {
+    "system_id": 3,
+    "system_name": "SCADA制御システム",
+    "system_type": "SCADA",
+    "connection_string": "tcp://scada.yamada-mfg.local:502",
+    "api_endpoint": "opc.tcp://scada.yamada-mfg.local:4840",
+    "authentication_type": "Certificate",
+    "status": "接続中",
+    "last_sync": "2024-03-15T09:32:00Z",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-03-15T09:32:00Z"
+  },
+  {
+    "system_id": 4,
+    "system_name": "在庫管理システム",
+    "system_type": "WMS",
+    "connection_string": "Server=wms-db.yamada-mfg.local;Database=WarehouseDB;User Id=wms_user;Password=***",
+    "api_endpoint": "https://wms.yamada-mfg.local/api/v1",
+    "authentication_type": "Basic Auth",
+    "status": "接続中",
+    "last_sync": "2024-03-15T08:45:00Z",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-03-15T08:45:00Z"
+  },
+  {
+    "system_id": 5,
+    "system_name": "品質管理システム",
+    "system_type": "QMS",
+    "connection_string": "Server=qms-db.yamada-mfg.local;Database=QualityDB;Integrated Security=true",
+    "api_endpoint": "https://qms.yamada-mfg.local/api/v1",
+    "authentication_type": "OAuth 2.0",
+    "status": "接続中",
+    "last_sync": "2024-03-15T09:15:00Z",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-03-15T09:15:00Z"
+  },
+  {
+    "system_id": 6,
+    "system_name": "エネルギー管理システム",
+    "system_type": "EMS",
+    "connection_string": "mqtt://ems.yamada-mfg.local:1883",
+    "api_endpoint": "https://ems.yamada-mfg.local/api/v1",
+    "authentication_type": "MQTT Credentials",
+    "status": "接続中",
+    "last_sync": "2024-03-15T09:28:00Z",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-03-15T09:28:00Z"
+  }
+]

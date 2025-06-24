@@ -1,0 +1,58 @@
+[
+  {
+    "notification_type_id": 1,
+    "type_name": "緊急アラート",
+    "description": "重大な設備異常や故障に関する緊急通知",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "notification_type_id": 2,
+    "type_name": "保全リマインダー",
+    "description": "予定されている保全作業の事前リマインダー通知",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "notification_type_id": 3,
+    "type_name": "レポート配信",
+    "description": "定期的な分析レポートの自動配信通知",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "notification_type_id": 4,
+    "type_name": "システム通知",
+    "description": "システムメンテナンスやアップデートに関する通知",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "notification_type_id": 5,
+    "type_name": "作業完了通知",
+    "description": "保全作業や修理作業の完了通知",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "notification_type_id": 6,
+    "type_name": "在庫不足警告",
+    "description": "部品在庫が最小在庫レベルを下回った場合の警告通知",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "notification_type_id": 7,
+    "type_name": "品質異常通知",
+    "description": "製品品質に関わる異常の発生通知",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "notification_type_id": 8,
+    "type_name": "AI予測通知",
+    "description": "AI分析による故障予測結果の通知",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  }
+]
