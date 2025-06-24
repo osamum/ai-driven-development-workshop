@@ -1,0 +1,441 @@
+{
+  "equipmentGroups": [
+    {
+      "id": "group1",
+      "group_id": 1,
+      "group_name": "生産ライン1",
+      "description": "メイン生産ラインの設備群",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "group2",
+      "group_id": 2,
+      "group_name": "生産ライン2",
+      "description": "サブ生産ラインの設備群",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "group3",
+      "group_id": 3,
+      "group_name": "検査設備",
+      "description": "品質検査用設備群",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "eq1",
+      "equipment_id": 1,
+      "group_id": 1,
+      "equipment_name": "CNC加工機A1",
+      "equipment_type": "CNC加工機",
+      "model_number": "CNC-1000X",
+      "serial_number": "CNC1000X-001",
+      "manufacturer": "マキノ精機",
+      "installation_date": "2023-06-15",
+      "location": "工場棟A-1F-001",
+      "status": "稼働中",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-06-24T05:00:00Z"
+    },
+    {
+      "id": "eq2",
+      "equipment_id": 2,
+      "group_id": 1,
+      "equipment_name": "搬送ロボット1",
+      "equipment_type": "搬送ロボット",
+      "model_number": "ROBOT-500",
+      "serial_number": "ROBOT500-001",
+      "manufacturer": "安川電機",
+      "installation_date": "2023-08-10",
+      "location": "工場棟A-1F-002",
+      "status": "稼働中",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-06-24T05:00:00Z"
+    },
+    {
+      "id": "eq3",
+      "equipment_id": 3,
+      "group_id": 2,
+      "equipment_name": "プレス機B1",
+      "equipment_type": "プレス機",
+      "model_number": "PRESS-2000",
+      "serial_number": "PRESS2000-001",
+      "manufacturer": "コマツ産機",
+      "installation_date": "2023-04-20",
+      "location": "工場棟B-1F-001",
+      "status": "保守中",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-06-24T05:00:00Z"
+    },
+    {
+      "id": "eq4",
+      "equipment_id": 4,
+      "group_id": 3,
+      "equipment_name": "検査機C1",
+      "equipment_type": "外観検査機",
+      "model_number": "INSPECT-100",
+      "serial_number": "INSPECT100-001",
+      "manufacturer": "キーエンス",
+      "installation_date": "2023-09-05",
+      "location": "工場棟C-1F-001",
+      "status": "稼働中",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-06-24T05:00:00Z"
+    }
+  ],
+  "sensors": [
+    {
+      "id": "sensor1",
+      "sensor_id": 1,
+      "equipment_id": 1,
+      "sensor_name": "温度センサー1",
+      "sensor_type": "温度",
+      "measurement_unit": "℃",
+      "min_value": -20.0,
+      "max_value": 120.0,
+      "normal_min": 20.0,
+      "normal_max": 80.0,
+      "status": "正常",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "sensor2",
+      "sensor_id": 2,
+      "equipment_id": 1,
+      "sensor_name": "振動センサー1",
+      "sensor_type": "振動",
+      "measurement_unit": "mm/s",
+      "min_value": 0.0,
+      "max_value": 50.0,
+      "normal_min": 0.0,
+      "normal_max": 10.0,
+      "status": "正常",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "sensor3",
+      "sensor_id": 3,
+      "equipment_id": 2,
+      "sensor_name": "電流センサー1",
+      "sensor_type": "電流",
+      "measurement_unit": "A",
+      "min_value": 0.0,
+      "max_value": 100.0,
+      "normal_min": 5.0,
+      "normal_max": 30.0,
+      "status": "正常",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "sensor4",
+      "sensor_id": 4,
+      "equipment_id": 3,
+      "sensor_name": "圧力センサー1",
+      "sensor_type": "圧力",
+      "measurement_unit": "MPa",
+      "min_value": 0.0,
+      "max_value": 50.0,
+      "normal_min": 10.0,
+      "normal_max": 40.0,
+      "status": "正常",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "sensor5",
+      "sensor_id": 5,
+      "equipment_id": 4,
+      "sensor_name": "画像センサー1",
+      "sensor_type": "画像",
+      "measurement_unit": "pixel",
+      "min_value": 0.0,
+      "max_value": 1920.0,
+      "normal_min": 1000.0,
+      "normal_max": 1920.0,
+      "status": "正常",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "sensorData": [
+    {
+      "id": "data1",
+      "data_id": 1,
+      "sensor_id": 1,
+      "value": 45.2,
+      "status": "正常",
+      "timestamp": "2024-06-24T05:00:00Z",
+      "created_at": "2024-06-24T05:00:00Z"
+    },
+    {
+      "id": "data2",
+      "data_id": 2,
+      "sensor_id": 2,
+      "value": 3.5,
+      "status": "正常",
+      "timestamp": "2024-06-24T05:00:00Z",
+      "created_at": "2024-06-24T05:00:00Z"
+    },
+    {
+      "id": "data3",
+      "data_id": 3,
+      "sensor_id": 3,
+      "value": 15.8,
+      "status": "正常",
+      "timestamp": "2024-06-24T05:00:00Z",
+      "created_at": "2024-06-24T05:00:00Z"
+    },
+    {
+      "id": "data4",
+      "data_id": 4,
+      "sensor_id": 4,
+      "value": 25.5,
+      "status": "正常",
+      "timestamp": "2024-06-24T05:00:00Z",
+      "created_at": "2024-06-24T05:00:00Z"
+    },
+    {
+      "id": "data5",
+      "data_id": 5,
+      "sensor_id": 1,
+      "value": 78.9,
+      "status": "警告",
+      "timestamp": "2024-06-24T05:05:00Z",
+      "created_at": "2024-06-24T05:05:00Z"
+    },
+    {
+      "id": "data6",
+      "data_id": 6,
+      "sensor_id": 2,
+      "value": 12.3,
+      "status": "異常",
+      "timestamp": "2024-06-24T05:05:00Z",
+      "created_at": "2024-06-24T05:05:00Z"
+    }
+  ],
+  "userRoles": [
+    {
+      "id": "role1",
+      "role_id": 1,
+      "role_name": "設備管理者",
+      "description": "工場設備の全体的な管理と監督を行う",
+      "permissions": "read,write,delete,admin",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "role2",
+      "role_id": 2,
+      "role_name": "保全担当者",
+      "description": "設備の保守・点検・修理を実施する技術者",
+      "permissions": "read,write",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "role3",
+      "role_id": 3,
+      "role_name": "製造オペレーター",
+      "description": "設備の日常的な操作と監視を行う",
+      "permissions": "read",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "user1",
+      "user_id": 1,
+      "role_id": 1,
+      "username": "tanaka_manager",
+      "email": "tanaka@example.com",
+      "full_name": "田中 太郎",
+      "department": "生産技術部",
+      "phone_number": "03-1234-5678",
+      "status": "アクティブ",
+      "last_login": "2024-06-24T04:30:00Z",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-06-24T04:30:00Z"
+    },
+    {
+      "id": "user2",
+      "user_id": 2,
+      "role_id": 2,
+      "username": "sato_maintenance",
+      "email": "sato@example.com",
+      "full_name": "佐藤 花子",
+      "department": "設備保全部",
+      "phone_number": "03-2345-6789",
+      "status": "アクティブ",
+      "last_login": "2024-06-24T03:45:00Z",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-06-24T03:45:00Z"
+    },
+    {
+      "id": "user3",
+      "user_id": 3,
+      "role_id": 3,
+      "username": "suzuki_operator",
+      "email": "suzuki@example.com",
+      "full_name": "鈴木 次郎",
+      "department": "製造部",
+      "phone_number": "03-3456-7890",
+      "status": "アクティブ",
+      "last_login": "2024-06-24T05:00:00Z",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-06-24T05:00:00Z"
+    }
+  ],
+  "alertTypes": [
+    {
+      "id": "alerttype1",
+      "alert_type_id": 1,
+      "type_name": "温度異常",
+      "description": "設備温度が正常範囲を超過",
+      "severity": "高",
+      "color_code": "#FF4444",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "alerttype2",
+      "alert_type_id": 2,
+      "type_name": "振動異常",
+      "description": "設備振動が正常範囲を超過",
+      "severity": "中",
+      "color_code": "#FF8800",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "alerttype3",
+      "alert_type_id": 3,
+      "type_name": "保全期限",
+      "description": "予定保全の実施期限が近づいている",
+      "severity": "低",
+      "color_code": "#FFAA00",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "alert1",
+      "alert_id": 1,
+      "equipment_id": 1,
+      "sensor_id": 1,
+      "alert_type_id": 1,
+      "assigned_user_id": 2,
+      "title": "CNC加工機A1 温度異常",
+      "description": "設備温度が正常範囲(80℃)を超過しました。現在値: 78.9℃",
+      "severity": "高",
+      "status": "未対応",
+      "detected_at": "2024-06-24T05:05:00Z",
+      "acknowledged_at": null,
+      "resolved_at": null,
+      "created_at": "2024-06-24T05:05:00Z",
+      "updated_at": "2024-06-24T05:05:00Z"
+    },
+    {
+      "id": "alert2",
+      "alert_id": 2,
+      "equipment_id": 1,
+      "sensor_id": 2,
+      "alert_type_id": 2,
+      "assigned_user_id": 2,
+      "title": "CNC加工機A1 振動異常",
+      "description": "設備振動が正常範囲(10mm/s)を超過しました。現在値: 12.3mm/s",
+      "severity": "中",
+      "status": "確認済み",
+      "detected_at": "2024-06-24T05:05:00Z",
+      "acknowledged_at": "2024-06-24T05:08:00Z",
+      "resolved_at": null,
+      "created_at": "2024-06-24T05:05:00Z",
+      "updated_at": "2024-06-24T05:08:00Z"
+    }
+  ],
+  "maintenanceTypes": [
+    {
+      "id": "maintype1",
+      "maintenance_type_id": 1,
+      "type_name": "定期点検",
+      "description": "スケジュールに基づく定期的な点検",
+      "default_duration_hours": 4,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "maintype2",
+      "maintenance_type_id": 2,
+      "type_name": "予知保全",
+      "description": "AI予測に基づく予防的保全",
+      "default_duration_hours": 6,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "maintype3",
+      "maintenance_type_id": 3,
+      "type_name": "緊急修理",
+      "description": "故障発生時の緊急対応",
+      "default_duration_hours": 8,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "maintenancePlans": [
+    {
+      "id": "plan1",
+      "plan_id": 1,
+      "equipment_id": 1,
+      "maintenance_type_id": 2,
+      "assigned_user_id": 2,
+      "plan_name": "CNC加工機A1 予知保全",
+      "description": "温度・振動異常の検知に基づく予防的保全",
+      "scheduled_start": "2024-06-25T09:00:00Z",
+      "scheduled_end": "2024-06-25T15:00:00Z",
+      "estimated_duration_hours": 6,
+      "priority": "高",
+      "status": "計画済み",
+      "created_at": "2024-06-24T05:10:00Z",
+      "updated_at": "2024-06-24T05:10:00Z"
+    }
+  ],
+  "parts": [
+    {
+      "id": "part1",
+      "part_id": 1,
+      "part_number": "BEARING-001",
+      "part_name": "ベアリング 6200ZZ",
+      "description": "深溝玉軸受け 内径10mm 外径30mm",
+      "manufacturer": "NSK",
+      "unit_cost": 1500.0,
+      "stock_quantity": 50,
+      "min_stock_level": 10,
+      "status": "在庫あり",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-06-20T00:00:00Z"
+    },
+    {
+      "id": "part2",
+      "part_id": 2,
+      "part_number": "MOTOR-001",
+      "part_name": "サーボモーター 200W",
+      "description": "ACサーボモーター 200W 3000rpm",
+      "manufacturer": "安川電機",
+      "unit_cost": 45000.0,
+      "stock_quantity": 5,
+      "min_stock_level": 2,
+      "status": "在庫あり",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-06-20T00:00:00Z"
+    }
+  ]
+}

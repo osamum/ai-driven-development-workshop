@@ -1,0 +1,44 @@
+[
+  {
+    "id": "user1",
+    "user_id": 1,
+    "role_id": 1,
+    "username": "tanaka_manager",
+    "email": "tanaka@example.com",
+    "full_name": "田中 太郎",
+    "department": "生産技術部",
+    "phone_number": "03-1234-5678",
+    "status": "アクティブ",
+    "last_login": "2024-06-24T04:30:00Z",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-06-24T04:30:00Z"
+  },
+  {
+    "id": "user2",
+    "user_id": 2,
+    "role_id": 2,
+    "username": "sato_maintenance",
+    "email": "sato@example.com",
+    "full_name": "佐藤 花子",
+    "department": "設備保全部",
+    "phone_number": "03-2345-6789",
+    "status": "アクティブ",
+    "last_login": "2024-06-24T03:45:00Z",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-06-24T03:45:00Z"
+  },
+  {
+    "id": "user3",
+    "user_id": 3,
+    "role_id": 3,
+    "username": "suzuki_operator",
+    "email": "suzuki@example.com",
+    "full_name": "鈴木 次郎",
+    "department": "製造部",
+    "phone_number": "03-3456-7890",
+    "status": "アクティブ",
+    "last_login": "2024-06-24T05:00:00Z",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-06-24T05:00:00Z"
+  }
+]
