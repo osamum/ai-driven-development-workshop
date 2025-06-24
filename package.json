@@ -1,0 +1,24 @@
+{
+  "name": "factory-management-system",
+  "version": "1.0.0",
+  "description": "工場設備管理システム - Vue.js実装",
+  "main": "main.js",
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve"
+  },
+  "dependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^5.0.0",
+    "@vue/compiler-sfc": "^3.4.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

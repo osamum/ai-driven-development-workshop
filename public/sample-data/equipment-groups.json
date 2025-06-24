@@ -1,0 +1,26 @@
+[
+  {
+    "id": "group1",
+    "group_id": 1,
+    "group_name": "生産ライン1",
+    "description": "メイン生産ラインの設備群",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "group2",
+    "group_id": 2,
+    "group_name": "生産ライン2",
+    "description": "サブ生産ラインの設備群",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": "group3",
+    "group_id": 3,
+    "group_name": "検査設備",
+    "description": "品質検査用設備群",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-01T00:00:00Z"
+  }
+]
