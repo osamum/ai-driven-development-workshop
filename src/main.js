@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import { dataLoader } from './data/dataLoader'
 
 // Service Worker の登録（オフライン対応）
 if ('serviceWorker' in navigator) {
@@ -14,5 +15,8 @@ if ('serviceWorker' in navigator) {
       })
   })
 }
+
+// サンプルデータの初期化
+dataLoader.initializeData()
 
 createApp(App).use(router).mount('#app')
