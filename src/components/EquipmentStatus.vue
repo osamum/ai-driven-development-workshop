@@ -2,6 +2,21 @@
   <div class="equipment-status">
     <h2 class="page-title">設備稼働状況</h2>
     
+    <!-- API接続状態表示 -->
+    <div v-if="!apiConnected" class="status-banner warning">
+      ⚠️ APIサーバーに接続できません。ローカルデータを使用しています。
+    </div>
+    
+    <!-- エラー表示 -->
+    <div v-if="error" class="status-banner error">
+      ❌ {{ error }}
+    </div>
+
+    <!-- ローディング表示 -->
+    <div v-if="loading" class="loading-overlay">
+      <div class="loading-spinner">📡 データを読み込み中...</div>
+    </div>
+    
     <!-- フィルターセクション -->
     <section class="filter-section">
       <div class="card">
@@ -237,6 +252,8 @@
 </template>
 
 <script>
+import apiService from '../services/apiService';
+
 export default {
   name: 'EquipmentStatus',
   data() {
@@ -245,9 +262,6 @@ export default {
       equipmentList: [],
       filteredEquipment: [],
       equipmentGroups: [],
-      
-      // センサーデータ
-      sensorData: [],
       
       // フィルター設定
       selectedGroup: '',
@@ -266,46 +280,67 @@ export default {
         stopped: 0,
         error: 0,
         maintenance: 0
-      }
+      },
+
+      // ローディング状態とエラー
+      loading: false,
+      error: null,
+      apiConnected: false
     }
   },
   async mounted() {
-    await this.loadData();
+    await this.initializeComponent();
   },
   methods: {
+    async initializeComponent() {
+      this.loading = true;
+      this.error = null;
+
+      try {
+        // サーバー接続確認
+        await this.checkApiConnection();
+        
+        // データ読み込み
+        await this.loadData();
+      } catch (error) {
+        console.error('初期化エラー:', error);
+        this.error = `データの読み込みに失敗しました: ${error.message}`;
+        // フォールバックデータを使用
+        this.setFallbackData();
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async checkApiConnection() {
+      try {
+        await apiService.checkServerHealth();
+        this.apiConnected = true;
+        console.log('APIサーバーとの接続に成功しました');
+      } catch (error) {
+        this.apiConnected = false;
+        throw new Error('APIサーバーに接続できません');
+      }
+    },
+
     async loadData() {
       try {
-        // 設備データの読み込み
-        const equipmentResponse = await fetch('/sample-data/equipment.json');
-        const equipmentData = await equipmentResponse.json();
+        console.log('設備データを読み込み中...');
         
         // 設備グループの読み込み
-        const groupsResponse = await fetch('/sample-data/equipment-groups.json');
-        const groupsData = await groupsResponse.json();
+        this.equipmentGroups = await apiService.getEquipmentGroups();
         
-        // センサーデータの読み込み
-        const sensorsResponse = await fetch('/sample-data/sensors.json');
-        const sensorsData = await sensorsResponse.json();
-        
-        // センサーデータの読み込み
-        const sensorDataResponse = await fetch('/sample-data/sensor-data.json');
-        const sensorDataValues = await sensorDataResponse.json();
-        
-        this.equipmentGroups = groupsData;
-        this.sensorData = sensorDataValues;
-        
-        // 設備データにセンサー情報を関連付け
-        this.equipmentList = equipmentData.map(equipment => ({
-          ...equipment,
-          sensors: this.getEquipmentSensors(equipment.equipment_id, sensorsData, sensorDataValues)
-        }));
-        
+        // 設備データの読み込み
+        this.equipmentList = await apiService.getEquipment();
         this.filteredEquipment = [...this.equipmentList];
+        
+        // ステータス集計
         this.calculateStatusCounts();
         
+        console.log(`設備データ読み込み完了: ${this.equipmentList.length}件`);
       } catch (error) {
-        console.error('データの読み込みエラー:', error);
-        this.setFallbackData();
+        console.error('データ読み込みエラー:', error);
+        throw error;
       }
     },
 
@@ -332,20 +367,41 @@ export default {
       this.calculateStatusCounts();
     },
 
-    getEquipmentSensors(equipmentId, sensorsData, sensorDataValues) {
-      const equipmentSensors = sensorsData.filter(sensor => sensor.equipment_id === equipmentId);
-      return equipmentSensors.map(sensor => {
-        const latestData = sensorDataValues.find(data => data.sensor_id === sensor.sensor_id);
-        return {
-          ...sensor,
-          current_value: latestData ? latestData.value : 0,
-          status: latestData ? latestData.status : '不明',
-          unit: sensor.measurement_unit || ''
-        };
-      });
+    async filterEquipment() {
+      // APIが利用可能な場合はサーバー側でフィルタリング
+      if (this.apiConnected) {
+        try {
+          this.loading = true;
+          
+          // フィルター条件を構築
+          const filters = {};
+          if (this.selectedStatus) filters.status = this.selectedStatus;
+          if (this.selectedGroup) filters.equipment_type = this.selectedGroup;
+          if (this.searchTerm) filters.search = this.searchTerm;
+
+          console.log('フィルター適用:', filters);
+          
+          // APIでフィルター済みデータを取得
+          this.filteredEquipment = await apiService.getEquipment(filters);
+          
+        } catch (error) {
+          console.error('フィルタリングエラー:', error);
+          this.error = `フィルタリングに失敗しました: ${error.message}`;
+          // エラー時はクライアント側フィルタリングにフォールバック
+          this.filterEquipmentLocal();
+        } finally {
+          this.loading = false;
+        }
+      } else {
+        // APIが利用できない場合はクライアント側でフィルタリング
+        this.filterEquipmentLocal();
+      }
+      
+      // ステータス集計を更新
+      this.calculateStatusCounts();
     },
 
-    filterEquipment() {
+    filterEquipmentLocal() {
       this.filteredEquipment = this.equipmentList.filter(equipment => {
         const matchesGroup = !this.selectedGroup || equipment.equipment_type.includes(this.selectedGroup);
         const matchesStatus = !this.selectedStatus || equipment.status === this.selectedStatus;
@@ -355,8 +411,6 @@ export default {
         
         return matchesGroup && matchesStatus && matchesSearch;
       });
-      
-      this.calculateStatusCounts();
     },
 
     calculateStatusCounts() {

@@ -6,15 +6,22 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "serve": "vue-cli-service serve"
+    "serve": "vue-cli-service serve",
+    "server": "node server/index.js",
+    "dev-server": "nodemon server/index.js"
   },
   "dependencies": {
     "vue": "^3.4.0",
-    "vue-router": "^4.2.0"
+    "vue-router": "^4.2.0",
+    "@azure/cosmos": "^4.0.0",
+    "express": "^4.18.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.0"
   },
   "devDependencies": {
     "@vue/cli-service": "^5.0.0",
-    "@vue/compiler-sfc": "^3.4.0"
+    "@vue/compiler-sfc": "^3.4.0",
+    "nodemon": "^3.0.0"
   },
   "browserslist": [
     "> 1%",
