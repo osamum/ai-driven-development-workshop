@@ -6,6 +6,7 @@
       <nav class="nav">
         <router-link to="/" class="nav-link">ホーム</router-link>
         <router-link to="/equipment-status" class="nav-link">設備稼働状況</router-link>
+        <router-link to="/ai-chat" class="nav-link">AI チャット</router-link>
       </nav>
     </header>
 

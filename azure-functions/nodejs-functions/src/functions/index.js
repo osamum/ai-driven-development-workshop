@@ -1,6 +1,7 @@
 const { app } = require('@azure/functions');
 const fs = require('fs').promises;
 const path = require('path');
+const { OpenAI } = require('openai');
 
 // サンプルデータ読み込み関数
 async function loadSampleData(filename) {
@@ -249,6 +250,182 @@ app.http('health-check', {
                     overall_status: 'unhealthy',
                     error: `エラーが発生しました: ${error.message}`,
                     timestamp: new Date().toISOString()
+                })
+            };
+        }
+    }
+});
+
+// チャット履歴を保存するための簡単なメモリストレージ
+let chatHistory = [];
+
+// Azure OpenAI クライアントの初期化
+function getOpenAIClient() {
+    const apiKey = process.env.AZURE_OPENAI_API_KEY;
+    const endpoint = process.env.AZURE_OPENAI_ENDPOINT;
+    
+    if (!endpoint || !apiKey) {
+        throw new Error('Azure OpenAI の設定が不完全です。環境変数を確認してください。');
+    }
+    
+    return new OpenAI({
+        apiKey: apiKey,
+        baseURL: `${endpoint}/openai/deployments/${process.env.AZURE_OPENAI_DEPLOYMENT_NAME || 'gpt-35-turbo'}`,
+        defaultQuery: { 'api-version': '2024-02-15-preview' },
+        defaultHeaders: {
+            'api-key': apiKey,
+        },
+    });
+}
+
+// AI Chat API
+app.http('ai-chat', {
+    methods: ['POST'],
+    route: 'ai/chat',
+    handler: async (request, context) => {
+        context.log('AI Chat API が呼び出されました');
+
+        try {
+            const requestBody = await request.json();
+            const { message, sessionId } = requestBody;
+
+            if (!message) {
+                return {
+                    status: 400,
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                    body: JSON.stringify({ 
+                        error: 'メッセージが必要です' 
+                    })
+                };
+            }
+
+            // デモ用のシンプルな履歴管理（session IDベース）
+            const currentSessionId = sessionId || 'default';
+            
+            // 現在のセッションの履歴を取得
+            let sessionHistory = chatHistory.filter(chat => chat.sessionId === currentSessionId);
+
+            // Azure OpenAI APIが利用できない場合のフォールバック
+            let aiResponse;
+            try {
+                const client = getOpenAIClient();
+
+                // チャット履歴をメッセージ形式に変換
+                const messages = [
+                    {
+                        role: 'system',
+                        content: 'あなたは工場設備管理システムのアシスタントです。設備の状況、保全、効率化に関する質問に親切に答えてください。'
+                    },
+                    ...sessionHistory.map(chat => ([
+                        { role: 'user', content: chat.userMessage },
+                        { role: 'assistant', content: chat.aiResponse }
+                    ])).flat(),
+                    { role: 'user', content: message }
+                ];
+
+                const completion = await client.chat.completions.create({
+                    model: process.env.AZURE_OPENAI_DEPLOYMENT_NAME || 'gpt-35-turbo',
+                    messages: messages,
+                    max_tokens: 500,
+                    temperature: 0.7
+                });
+
+                aiResponse = completion.choices[0].message.content;
+
+            } catch (openAIError) {
+                context.log(`Azure OpenAI API エラー: ${openAIError.message}`);
+                
+                // フォールバック応答（デモ用）
+                aiResponse = `お疲れ様です。「${message}」に関するご質問ですね。
+
+現在、AI機能は設定中です。以下のような内容でお答えできます：
+
+• 設備の稼働状況に関する質問
+• 保全スケジュールの確認
+• 効率化提案の相談
+• アラート対応の支援
+
+詳細な設定については、Azure OpenAI サービスの接続設定を確認してください。`;
+            }
+
+            // 履歴に追加
+            const chatEntry = {
+                id: `chat_${Date.now()}`,
+                sessionId: currentSessionId,
+                userMessage: message,
+                aiResponse: aiResponse,
+                timestamp: new Date().toISOString()
+            };
+
+            chatHistory.push(chatEntry);
+
+            // 履歴が長くなりすぎないよう制限（最新50件まで）
+            if (chatHistory.length > 50) {
+                chatHistory = chatHistory.slice(-50);
+            }
+
+            return {
+                status: 200,
+                headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                body: JSON.stringify({
+                    success: true,
+                    response: aiResponse,
+                    chatId: chatEntry.id,
+                    sessionId: currentSessionId,
+                    timestamp: chatEntry.timestamp
+                })
+            };
+
+        } catch (error) {
+            context.error(`AI Chat エラー: ${error.message}`);
+            return {
+                status: 500,
+                headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                body: JSON.stringify({ 
+                    success: false,
+                    error: `エラーが発生しました: ${error.message}` 
+                })
+            };
+        }
+    }
+});
+
+// チャット履歴取得API
+app.http('ai-chat-history', {
+    methods: ['GET'],
+    route: 'ai/chat/history',
+    handler: async (request, context) => {
+        context.log('AI Chat 履歴API が呼び出されました');
+
+        try {
+            const sessionId = request.query.get('sessionId') || 'default';
+            const limit = parseInt(request.query.get('limit')) || 20;
+
+            // 指定セッションの履歴を取得
+            const sessionHistory = chatHistory
+                .filter(chat => chat.sessionId === sessionId)
+                .slice(-limit)
+                .reverse(); // 最新から表示
+
+            return {
+                status: 200,
+                headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                body: JSON.stringify({
+                    success: true,
+                    sessionId: sessionId,
+                    history: sessionHistory,
+                    totalCount: sessionHistory.length
+                })
+            };
+
+        } catch (error) {
+            context.error(`チャット履歴取得エラー: ${error.message}`);
+            return {
+                status: 500,
+                headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                body: JSON.stringify({ 
+                    success: false,
+                    error: `エラーが発生しました: ${error.message}` 
                 })
             };
         }

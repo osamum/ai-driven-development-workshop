@@ -8,9 +8,9 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "@azure/functions": "^4.5.0"
+    "@azure/functions": "^4.5.0",
+    "openai": "^4.20.0"
   },
   "devDependencies": {
-    "azure-functions-core-tools": "^4.0.5611"
   }
 }
