@@ -99,6 +99,23 @@ az cosmosdb sql query \
    - 各コンテナーのパーティションキーが正しく設定されているか確認
    - サンプルデータにパーティションキー値が含まれているか確認
 
+## レポーティング用クエリ
+
+### メンテナンス中設備の検索
+```bash
+# メンテナンス中の設備を検索
+az cosmosdb sql query \
+  --account-name factory-cosmosdb-account \
+  --resource-group factory-management-rg \
+  --database-name FactoryManagementDB \
+  --container-name Equipment \
+  --query-text "SELECT c.equipment_id, c.equipment_name, c.equipment_type, c.location, c.status FROM c WHERE c.status = '保守中'"
+```
+
+詳細なクエリサンプルは以下のファイルを参照してください：
+- `maintenance-equipment-query.sql` - SQL クエリ集
+- `maintenance-equipment-query-guide.md` - 使用方法ガイド
+
 ## 参考資料
 - [Azure Cosmos DB ドキュメント](https://docs.microsoft.com/ja-jp/azure/cosmos-db/)
 - [Azure CLI リファレンス](https://docs.microsoft.com/ja-jp/cli/azure/cosmosdb)
