@@ -1,9 +1,30 @@
 <template>
   <div class="equipment-status">
-    <h2 class="page-title">設備稼働状況</h2>
+    <div class="header-section">
+      <h2 class="page-title">設備稼働状況</h2>
+      <button 
+        class="btn btn-primary refresh-btn" 
+        @click="refreshData" 
+        :disabled="loading"
+      >
+        {{ loading ? '読み込み中...' : '更新' }}
+      </button>
+    </div>
+
+    <!-- エラー表示 -->
+    <div v-if="error" class="error-message">
+      <span>⚠️ {{ error }}</span>
+      <button class="btn btn-primary" @click="refreshData">再試行</button>
+    </div>
+
+    <!-- ローディング表示 -->
+    <div v-if="loading" class="loading-indicator">
+      <div class="loading-spinner"></div>
+      <p>設備稼働状況を読み込み中...</p>
+    </div>
     
     <!-- フィルターセクション -->
-    <section class="filter-section">
+    <section class="filter-section" v-if="!loading">
       <div class="card">
         <div class="filter-controls">
           <div class="filter-group">
@@ -39,7 +60,7 @@
     </section>
 
     <!-- 稼働状況サマリー -->
-    <section class="status-summary">
+    <section class="status-summary" v-if="!loading">
       <div class="grid grid-4">
         <div class="card status-card active">
           <div class="status-icon">🟢</div>
@@ -73,7 +94,7 @@
     </section>
 
     <!-- 設備リスト -->
-    <section class="equipment-list">
+    <section class="equipment-list" v-if="!loading">
       <div class="card">
         <div class="equipment-header">
           <h3>設備一覧 ({{ filteredEquipment.length }}件)</h3>
@@ -237,6 +258,8 @@
 </template>
 
 <script>
+import ApiService from '../services/api.js'
+
 export default {
   name: 'EquipmentStatus',
   data() {
@@ -266,7 +289,11 @@ export default {
         stopped: 0,
         error: 0,
         maintenance: 0
-      }
+      },
+
+      // ローディング状態
+      loading: false,
+      error: null
     }
   },
   async mounted() {
@@ -274,75 +301,53 @@ export default {
   },
   methods: {
     async loadData() {
+      this.loading = true;
+      this.error = null;
+      
       try {
-        // 設備データの読み込み
-        const equipmentResponse = await fetch('/sample-data/equipment.json');
-        const equipmentData = await equipmentResponse.json();
+        // API サービスを使用してデータを取得
+        const data = await ApiService.getEquipmentStatus();
         
-        // 設備グループの読み込み
-        const groupsResponse = await fetch('/sample-data/equipment-groups.json');
-        const groupsData = await groupsResponse.json();
-        
-        // センサーデータの読み込み
-        const sensorsResponse = await fetch('/sample-data/sensors.json');
-        const sensorsData = await sensorsResponse.json();
-        
-        // センサーデータの読み込み
-        const sensorDataResponse = await fetch('/sample-data/sensor-data.json');
-        const sensorDataValues = await sensorDataResponse.json();
-        
-        this.equipmentGroups = groupsData;
-        this.sensorData = sensorDataValues;
+        this.equipmentGroups = data.groups;
+        this.sensorData = data.sensorData;
         
         // 設備データにセンサー情報を関連付け
-        this.equipmentList = equipmentData.map(equipment => ({
+        this.equipmentList = data.equipment.map(equipment => ({
           ...equipment,
-          sensors: this.getEquipmentSensors(equipment.equipment_id, sensorsData, sensorDataValues)
+          sensors: ApiService.getEquipmentSensors(equipment.equipment_id, data.sensors, data.sensorData)
         }));
         
         this.filteredEquipment = [...this.equipmentList];
-        this.calculateStatusCounts();
+        this.statusCounts = ApiService.calculateStatusCounts(this.equipmentList);
         
       } catch (error) {
-        console.error('データの読み込みエラー:', error);
+        console.error('設備稼働状況データ取得エラー:', error);
+        this.error = 'データの取得に失敗しました。再度お試しください。';
         this.setFallbackData();
+      } finally {
+        this.loading = false;
       }
     },
 
     setFallbackData() {
-      // フォールバックデータ
-      this.equipmentList = [
-        {
-          id: 'eq1',
-          equipment_id: 1,
-          equipment_name: 'CNC加工機A1',
-          equipment_type: 'CNC加工機',
-          model_number: 'CNC-1000X',
-          manufacturer: 'マキノ精機',
-          location: '工場棟A-1F-001',
-          status: '稼働中',
-          installation_date: '2023-06-15',
-          updated_at: new Date().toISOString(),
-          sensors: [
-            { id: 1, sensor_name: '温度', current_value: 45.2, unit: '℃', status: '正常', normal_min: 20, normal_max: 60 }
-          ]
-        }
-      ];
+      // APIサービスのフォールバックデータを使用
+      const fallbackData = ApiService.getFallbackData();
+      
+      this.equipmentGroups = fallbackData.groups;
+      this.sensorData = fallbackData.sensorData;
+      
+      this.equipmentList = fallbackData.equipment.map(equipment => ({
+        ...equipment,
+        sensors: ApiService.getEquipmentSensors(equipment.equipment_id, fallbackData.sensors, fallbackData.sensorData)
+      }));
+      
       this.filteredEquipment = [...this.equipmentList];
-      this.calculateStatusCounts();
+      this.statusCounts = ApiService.calculateStatusCounts(this.equipmentList);
     },
 
-    getEquipmentSensors(equipmentId, sensorsData, sensorDataValues) {
-      const equipmentSensors = sensorsData.filter(sensor => sensor.equipment_id === equipmentId);
-      return equipmentSensors.map(sensor => {
-        const latestData = sensorDataValues.find(data => data.sensor_id === sensor.sensor_id);
-        return {
-          ...sensor,
-          current_value: latestData ? latestData.value : 0,
-          status: latestData ? latestData.status : '不明',
-          unit: sensor.measurement_unit || ''
-        };
-      });
+    // リフレッシュ機能を追加
+    async refreshData() {
+      await this.loadData();
     },
 
     filterEquipment() {
@@ -360,12 +365,7 @@ export default {
     },
 
     calculateStatusCounts() {
-      this.statusCounts = {
-        active: this.filteredEquipment.filter(eq => eq.status === '稼働中').length,
-        stopped: this.filteredEquipment.filter(eq => eq.status === '停止中').length,
-        error: this.filteredEquipment.filter(eq => eq.status === '故障').length,
-        maintenance: this.filteredEquipment.filter(eq => eq.status === 'メンテナンス').length
-      };
+      this.statusCounts = ApiService.calculateStatusCounts(this.filteredEquipment);
     },
 
     getStatusClass(status) {
@@ -412,10 +412,56 @@ export default {
   margin: 0 auto;
 }
 
+/* ヘッダーセクション */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
 .page-title {
   font-size: 2rem;
-  margin-bottom: 2rem;
   color: #2c3e50;
+  margin: 0;
+}
+
+.refresh-btn {
+  min-width: 120px;
+}
+
+/* エラー表示 */
+.error-message {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ローディング表示 */
+.loading-indicator {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.loading-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* フィルターセクション */
