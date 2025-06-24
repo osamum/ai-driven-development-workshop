@@ -9,17 +9,28 @@ class ApiService {
   }
 
   /**
-   * 設備稼働状況データを取得
+   * 設備稼働状況データを取得（フィルタリング対応）
+   * @param {Object} filters - フィルタリング条件
    * @returns {Promise<Object>} 設備、センサー、センサーデータを含むオブジェクト
    */
-  async getEquipmentStatus() {
+  async getEquipmentStatus(filters = {}) {
     try {
       if (this.useMockData) {
         return await this.getMockEquipmentStatus();
       }
       
+      // クエリパラメータの構築
+      const queryParams = new URLSearchParams();
+      if (filters.groupId) queryParams.append('groupId', filters.groupId);
+      if (filters.equipmentType) queryParams.append('equipmentType', filters.equipmentType);
+      if (filters.status) queryParams.append('status', filters.status);
+      if (filters.location) queryParams.append('location', filters.location);
+      
+      const queryString = queryParams.toString();
+      const url = `${this.baseUrl}/api/equipment-status${queryString ? '?' + queryString : ''}`;
+      
       // 実際のAPI呼び出し（Azure Functions）
-      const response = await fetch(`${this.baseUrl}/api/equipment-status`);
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -28,6 +39,42 @@ class ApiService {
     } catch (error) {
       console.warn('API呼び出しエラー、モックデータを使用:', error);
       return await this.getMockEquipmentStatus();
+    }
+  }
+
+  /**
+   * 設備別センサーデータを取得
+   * @param {number} equipmentId - 設備ID
+   * @param {Object} options - オプション（fromDate, toDate）
+   * @returns {Promise<Array>} センサーデータ配列
+   */
+  async getEquipmentSensorData(equipmentId, options = {}) {
+    try {
+      if (this.useMockData) {
+        // モックデータの場合は既存のセンサーデータから対象設備のものを抽出
+        const mockData = await this.getMockEquipmentStatus();
+        const equipmentSensors = mockData.sensors.filter(s => s.equipment_id === equipmentId);
+        const sensorIds = equipmentSensors.map(s => s.sensor_id);
+        return mockData.sensorData.filter(sd => sensorIds.includes(sd.sensor_id));
+      }
+      
+      // クエリパラメータの構築
+      const queryParams = new URLSearchParams();
+      if (options.fromDate) queryParams.append('fromDate', options.fromDate);
+      if (options.toDate) queryParams.append('toDate', options.toDate);
+      
+      const queryString = queryParams.toString();
+      const url = `${this.baseUrl}/api/equipment/${equipmentId}/sensor-data${queryString ? '?' + queryString : ''}`;
+      
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+      
+    } catch (error) {
+      console.warn('設備センサーデータの取得エラー:', error);
+      return [];
     }
   }
 

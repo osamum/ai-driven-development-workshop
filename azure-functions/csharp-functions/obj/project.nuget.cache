@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "J9ygIV9ULap4rMAVmmjq/GUfrokrGxQKbhqa1jowuMP3oC6+vwQH2nSzZLncomVOZwSg/QYcn5uXpaA38jYDSw==",
+  "dgSpecHash": "wGAUq+yaaN8wCw/DbW3fVH+tB/KfFDrwaAiNlVP+SJXnXn3XG5vP2R+CcHTYY3T8SjizxFoA8apnlAQfGOZ5Zg==",
   "success": true,
   "projectFilePath": "/home/runner/work/ai-driven-development-workshop/ai-driven-development-workshop/azure-functions/csharp-functions/FactoryManagementApi.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "/home/runner/.nuget/packages/microsoft.applicationinsights.windowsserver/2.22.0/microsoft.applicationinsights.windowsserver.2.22.0.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.applicationinsights.windowsserver.telemetrychannel/2.22.0/microsoft.applicationinsights.windowsserver.telemetrychannel.2.22.0.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.applicationinsights.workerservice/2.22.0/microsoft.applicationinsights.workerservice.2.22.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.azure.cosmos/3.35.4/microsoft.azure.cosmos.3.35.4.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.azure.functions.worker/1.21.0/microsoft.azure.functions.worker.1.21.0.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.azure.functions.worker.applicationinsights/1.2.0/microsoft.azure.functions.worker.applicationinsights.1.2.0.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.azure.functions.worker.core/1.17.0/microsoft.azure.functions.worker.core.1.17.0.nupkg.sha512",
@@ -27,6 +28,7 @@
     "/home/runner/.nuget/packages/microsoft.azure.functions.worker.sdk.analyzers/1.2.1/microsoft.azure.functions.worker.sdk.analyzers.1.2.1.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.azure.functions.worker.sdk.generators/1.1.6/microsoft.azure.functions.worker.sdk.generators.1.1.6.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.bcl.asyncinterfaces/5.0.0/microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.bcl.hashcode/1.1.0/microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.extensions.caching.abstractions/1.0.0/microsoft.extensions.caching.abstractions.1.0.0.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.extensions.caching.memory/1.0.0/microsoft.extensions.caching.memory.1.0.0.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.extensions.configuration/5.0.0/microsoft.extensions.configuration.5.0.0.nupkg.sha512",
@@ -61,6 +63,7 @@
     "/home/runner/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "/home/runner/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
     "/home/runner/.nuget/packages/system.collections/4.0.11/system.collections.4.0.11.nupkg.sha512",
     "/home/runner/.nuget/packages/system.collections.immutable/5.0.0/system.collections.immutable.5.0.0.nupkg.sha512",
     "/home/runner/.nuget/packages/system.configuration.configurationmanager/6.0.0/system.configuration.configurationmanager.6.0.0.nupkg.sha512",
@@ -73,6 +76,7 @@
     "/home/runner/.nuget/packages/system.io/4.1.0/system.io.4.1.0.nupkg.sha512",
     "/home/runner/.nuget/packages/system.io.filesystem.accesscontrol/4.7.0/system.io.filesystem.accesscontrol.4.7.0.nupkg.sha512",
     "/home/runner/.nuget/packages/system.linq/4.1.0/system.linq.4.1.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
     "/home/runner/.nuget/packages/system.memory.data/1.0.2/system.memory.data.1.0.2.nupkg.sha512",
     "/home/runner/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
     "/home/runner/.nuget/packages/system.reflection/4.1.0/system.reflection.4.1.0.nupkg.sha512",
@@ -91,6 +95,7 @@
     "/home/runner/.nuget/packages/system.threading/4.0.11/system.threading.4.0.11.nupkg.sha512",
     "/home/runner/.nuget/packages/system.threading.tasks/4.0.11/system.threading.tasks.4.0.11.nupkg.sha512",
     "/home/runner/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512",
     "/home/runner/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512"
   ],
   "logs": []

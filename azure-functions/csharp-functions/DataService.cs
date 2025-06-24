@@ -12,6 +12,10 @@ public interface IDataService
     Task<List<SensorData>> GetSensorDataAsync();
     Task<List<User>> GetUsersAsync();
     Task<List<Alert>> GetAlertsAsync();
+    
+    // フィルタリング機能付きメソッド（任意実装）
+    Task<List<Equipment>> GetEquipmentWithFiltersAsync(int? groupId = null, string? equipmentType = null, string? status = null, string? location = null);
+    Task<List<SensorData>> GetSensorDataByEquipmentAsync(int equipmentId, DateTime? fromDate = null, DateTime? toDate = null);
 }
 
 public class DataService : IDataService
@@ -178,6 +182,71 @@ public class DataService : IDataService
             CreatedAt = DateTime.Parse((string)a.created_at),
             UpdatedAt = DateTime.Parse((string)a.updated_at)
         }).ToList();
+    }
+    
+    /// <summary>
+    /// フィルタリング機能付きで設備データを取得（ファイルベース実装）
+    /// </summary>
+    public async Task<List<Equipment>> GetEquipmentWithFiltersAsync(
+        int? groupId = null, 
+        string? equipmentType = null, 
+        string? status = null, 
+        string? location = null)
+    {
+        var allEquipment = await GetEquipmentAsync();
+        var filteredEquipment = allEquipment.AsQueryable();
+
+        if (groupId.HasValue)
+        {
+            filteredEquipment = filteredEquipment.Where(e => e.GroupId == groupId.Value);
+        }
+
+        if (!string.IsNullOrEmpty(equipmentType))
+        {
+            filteredEquipment = filteredEquipment.Where(e => e.EquipmentType.Contains(equipmentType, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (!string.IsNullOrEmpty(status))
+        {
+            filteredEquipment = filteredEquipment.Where(e => e.Status.Contains(status, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (!string.IsNullOrEmpty(location))
+        {
+            filteredEquipment = filteredEquipment.Where(e => e.Location.Contains(location, StringComparison.OrdinalIgnoreCase));
+        }
+
+        return filteredEquipment.ToList();
+    }
+
+    /// <summary>
+    /// 設備別センサーデータを取得（ファイルベース実装）
+    /// </summary>
+    public async Task<List<SensorData>> GetSensorDataByEquipmentAsync(int equipmentId, DateTime? fromDate = null, DateTime? toDate = null)
+    {
+        var allSensorData = await GetSensorDataAsync();
+        var allSensors = await GetSensorsAsync();
+        
+        // 指定された設備のセンサーIDを取得
+        var equipmentSensorIds = allSensors
+            .Where(s => s.EquipmentId == equipmentId)
+            .Select(s => s.SensorId)
+            .ToHashSet();
+
+        var filteredData = allSensorData
+            .Where(sd => equipmentSensorIds.Contains(sd.SensorId));
+
+        if (fromDate.HasValue)
+        {
+            filteredData = filteredData.Where(sd => sd.Timestamp >= fromDate.Value);
+        }
+
+        if (toDate.HasValue)
+        {
+            filteredData = filteredData.Where(sd => sd.Timestamp <= toDate.Value);
+        }
+
+        return filteredData.OrderByDescending(sd => sd.Timestamp).ToList();
     }
 }
 }
