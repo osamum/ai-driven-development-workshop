@@ -1,0 +1,92 @@
+[
+  {
+    "alert_type_id": 1,
+    "type_name": "高温異常",
+    "description": "設備の動作温度が正常範囲を超えた場合に発生するアラート",
+    "severity": "高",
+    "color_code": "#FF4444",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "alert_type_id": 2,
+    "type_name": "振動異常",
+    "description": "設備の振動レベルが正常範囲を超えた場合に発生するアラート",
+    "severity": "中",
+    "color_code": "#FF8800",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "alert_type_id": 3,
+    "type_name": "圧力異常",
+    "description": "油圧・空圧システムの圧力が正常範囲を逸脱した場合のアラート",
+    "severity": "高",
+    "color_code": "#FF4444",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "alert_type_id": 4,
+    "type_name": "電流異常",
+    "description": "モーター電流値が正常範囲を逸脱した場合のアラート",
+    "severity": "中",
+    "color_code": "#FF8800",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "alert_type_id": 5,
+    "type_name": "回転数異常",
+    "description": "主軸・モーターの回転数が正常範囲を逸脱した場合のアラート",
+    "severity": "中",
+    "color_code": "#FF8800",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "alert_type_id": 6,
+    "type_name": "故障予兆",
+    "description": "AI分析により検出された設備故障の予兆アラート",
+    "severity": "中",
+    "color_code": "#FFAA00",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "alert_type_id": 7,
+    "type_name": "保全期限",
+    "description": "予定された保全作業の実施期限が近づいた場合のアラート",
+    "severity": "低",
+    "color_code": "#4488FF",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "alert_type_id": 8,
+    "type_name": "通信エラー",
+    "description": "センサーや外部システムとの通信に異常が発生した場合のアラート",
+    "severity": "高",
+    "color_code": "#FF4444",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "alert_type_id": 9,
+    "type_name": "品質異常",
+    "description": "製品品質に関わる測定値が基準を逸脱した場合のアラート",
+    "severity": "高",
+    "color_code": "#FF0066",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "alert_type_id": 10,
+    "type_name": "性能低下",
+    "description": "設備の稼働効率や性能指標が基準を下回った場合のアラート",
+    "severity": "低",
+    "color_code": "#FFDD00",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  }
+]

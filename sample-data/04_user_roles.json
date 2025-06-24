@@ -1,0 +1,50 @@
+[
+  {
+    "role_id": 1,
+    "role_name": "システム管理者",
+    "description": "システム全体の管理権限を持つ。ユーザー管理、システム設定、バックアップ・復旧等を実施する。",
+    "permissions": "admin.all,user.manage,system.configure,data.export,report.all",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "role_id": 2,
+    "role_name": "設備管理者",
+    "description": "設備の監視・分析・設定変更権限を持つ。設備状態の監視、アラート対応、分析レポート閲覧が可能。",
+    "permissions": "equipment.monitor,equipment.configure,alert.manage,report.view,dashboard.access",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "role_id": 3,
+    "role_name": "保全担当者",
+    "description": "設備の保全計画・作業管理権限を持つ。保全計画の作成、作業記録、部品管理等を実施する。",
+    "permissions": "maintenance.plan,maintenance.work,parts.manage,equipment.monitor,report.view",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "role_id": 4,
+    "role_name": "製造オペレーター",
+    "description": "設備の基本監視・操作権限を持つ。設備状態の確認、簡単なアラート対応、生産実績入力が可能。",
+    "permissions": "equipment.view,alert.view,production.input,dashboard.basic",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "role_id": 5,
+    "role_name": "品質管理者",
+    "description": "品質関連データの監視・分析権限を持つ。品質指標の監視、不良分析、品質レポート作成が可能。",
+    "permissions": "quality.monitor,quality.analyze,report.quality,equipment.view,alert.quality",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "role_id": 6,
+    "role_name": "閲覧者",
+    "description": "読み取り専用権限を持つ。ダッシュボード閲覧、基本的なレポート確認のみ可能。",
+    "permissions": "dashboard.view,report.basic,equipment.readonly",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  }
+]

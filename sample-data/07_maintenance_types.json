@@ -1,0 +1,66 @@
+[
+  {
+    "maintenance_type_id": 1,
+    "type_name": "定期点検",
+    "description": "設備の定期的な点検・清掃・調整を行う予防保全作業",
+    "default_duration_hours": 4,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "maintenance_type_id": 2,
+    "type_name": "予知保全",
+    "description": "AI分析結果に基づいて実施する故障予兆対応の保全作業",
+    "default_duration_hours": 8,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "maintenance_type_id": 3,
+    "type_name": "緊急修理",
+    "description": "設備故障や重大な異常に対する緊急対応の修理作業",
+    "default_duration_hours": 12,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "maintenance_type_id": 4,
+    "type_name": "部品交換",
+    "description": "消耗部品や故障部品の計画的な交換作業",
+    "default_duration_hours": 6,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "maintenance_type_id": 5,
+    "type_name": "オーバーホール",
+    "description": "設備の全面的な分解・清掃・組立・調整を行う大規模保全作業",
+    "default_duration_hours": 48,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "maintenance_type_id": 6,
+    "type_name": "校正作業",
+    "description": "測定機器や制御装置の精度校正・キャリブレーション作業",
+    "default_duration_hours": 3,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "maintenance_type_id": 7,
+    "type_name": "清掃作業",
+    "description": "設備の定期的な清掃・洗浄作業",
+    "default_duration_hours": 2,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  },
+  {
+    "maintenance_type_id": 8,
+    "type_name": "調整作業",
+    "description": "設備の動作パラメータや制御設定の調整・最適化作業",
+    "default_duration_hours": 4,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-01-15T09:00:00Z"
+  }
+]
