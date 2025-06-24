@@ -7,6 +7,7 @@
 ### デプロイメントスクリプト
 - `azure-deploy.sh` - Azure リソース作成スクリプト
 - `azure-cleanup.sh` - Azure リソース削除スクリプト
+- `setup-github-secrets.sh` - GitHub Secrets セットアップ補助スクリプト
 - `azure-deployment-guide.md` - 詳細なデプロイメント手順書
 
 ### GitHub Actions ワークフロー
@@ -30,6 +31,14 @@ chmod +x azure-deploy.sh
 ```
 
 ### 2. GitHub Actions セットアップ
+
+```bash
+# GitHub Secrets 設定の補助スクリプト実行
+chmod +x setup-github-secrets.sh
+./setup-github-secrets.sh <your-prefix> dev
+
+# 表示される値をGitHub Secretsに設定
+```
 
 1. GitHub Secrets に必要な認証情報を設定
 2. `main` ブランチへのプッシュで本番環境に自動デプロイ
