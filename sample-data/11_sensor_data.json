@@ -1,0 +1,242 @@
+[
+  {
+    "data_id": 1,
+    "sensor_id": 1,
+    "value": 65.2,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 2,
+    "sensor_id": 1,
+    "value": 66.8,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:31:00Z",
+    "created_at": "2024-03-15T09:31:00Z"
+  },
+  {
+    "data_id": 3,
+    "sensor_id": 1,
+    "value": 68.1,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:32:00Z",
+    "created_at": "2024-03-15T09:32:00Z"
+  },
+  {
+    "data_id": 4,
+    "sensor_id": 2,
+    "value": 2.3,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 5,
+    "sensor_id": 2,
+    "value": 2.5,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:31:00Z",
+    "created_at": "2024-03-15T09:31:00Z"
+  },
+  {
+    "data_id": 6,
+    "sensor_id": 2,
+    "value": 7.2,
+    "status": "異常",
+    "timestamp": "2024-03-15T09:32:00Z",
+    "created_at": "2024-03-15T09:32:00Z"
+  },
+  {
+    "data_id": 7,
+    "sensor_id": 3,
+    "value": 5.8,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 8,
+    "sensor_id": 3,
+    "value": 6.1,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:31:00Z",
+    "created_at": "2024-03-15T09:31:00Z"
+  },
+  {
+    "data_id": 9,
+    "sensor_id": 4,
+    "value": 45.2,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 10,
+    "sensor_id": 4,
+    "value": 47.8,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:31:00Z",
+    "created_at": "2024-03-15T09:31:00Z"
+  },
+  {
+    "data_id": 11,
+    "sensor_id": 5,
+    "value": 3200.0,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 12,
+    "sensor_id": 5,
+    "value": 3350.0,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:31:00Z",
+    "created_at": "2024-03-15T09:31:00Z"
+  },
+  {
+    "data_id": 13,
+    "sensor_id": 6,
+    "value": 62.4,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 14,
+    "sensor_id": 7,
+    "value": 1.8,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 15,
+    "sensor_id": 8,
+    "value": 85.6,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 16,
+    "sensor_id": 9,
+    "value": 3.2,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 17,
+    "sensor_id": 10,
+    "value": 58.3,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 18,
+    "sensor_id": 11,
+    "value": 3.8,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 19,
+    "sensor_id": 14,
+    "value": 6800.0,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 20,
+    "sensor_id": 15,
+    "value": 5.2,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 21,
+    "sensor_id": 16,
+    "value": 285.0,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 22,
+    "sensor_id": 17,
+    "value": 1050.0,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 23,
+    "sensor_id": 18,
+    "value": 42.0,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 24,
+    "sensor_id": 19,
+    "value": 55.0,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 25,
+    "sensor_id": 20,
+    "value": 22.5,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 26,
+    "sensor_id": 21,
+    "value": 0.8,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 27,
+    "sensor_id": 22,
+    "value": 65.0,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 28,
+    "sensor_id": 23,
+    "value": 18.5,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 29,
+    "sensor_id": 24,
+    "value": 650.0,
+    "status": "正常",
+    "timestamp": "2024-03-15T09:30:00Z",
+    "created_at": "2024-03-15T09:30:00Z"
+  },
+  {
+    "data_id": 30,
+    "sensor_id": 1,
+    "value": 85.3,
+    "status": "異常",
+    "timestamp": "2024-03-15T10:15:00Z",
+    "created_at": "2024-03-15T10:15:00Z"
+  }
+]

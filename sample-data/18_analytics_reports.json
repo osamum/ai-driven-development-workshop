@@ -1,0 +1,67 @@
+[
+  {
+    "report_id": 1,
+    "created_by_user_id": 2,
+    "report_type": "週次設備稼働レポート",
+    "title": "2024年3月第2週 設備稼働状況分析レポート",
+    "description": "第1〜第3製造ラインの週次稼働状況、OEE分析、課題と改善提案を含む包括的なレポート",
+    "period_start": "2024-03-11T00:00:00Z",
+    "period_end": "2024-03-17T23:59:59Z",
+    "report_data": "{\"summary\": {\"total_oee\": 78.5, \"availability\": 91.2, \"performance\": 88.7, \"quality\": 96.8}, \"equipment_performance\": [{\"equipment_id\": 1, \"oee\": 79.0}, {\"equipment_id\": 2, \"oee\": 77.3}], \"issues\": [\"CNCフライス盤#1高温異常\", \"研削盤#1故障予兆\"], \"recommendations\": [\"主軸冷却システム強化\", \"予知保全計画前倒し実施\"]}",
+    "file_path": "/reports/weekly/2024_W11_equipment_performance.pdf",
+    "generated_at": "2024-03-15T18:00:00Z",
+    "created_at": "2024-03-15T18:00:00Z"
+  },
+  {
+    "report_id": 2,
+    "created_by_user_id": 10,
+    "report_type": "品質分析レポート",
+    "title": "2024年3月 品質指標分析レポート",
+    "description": "製品品質の月次分析、不良率推移、品質改善効果の評価レポート",
+    "period_start": "2024-03-01T00:00:00Z",
+    "period_end": "2024-03-14T23:59:59Z",
+    "report_data": "{\"quality_summary\": {\"overall_yield\": 96.2, \"defect_rate\": 3.8, \"customer_complaints\": 2}, \"line_performance\": [{\"line\": \"第1製造ライン\", \"yield\": 97.1}, {\"line\": \"第2製造ライン\", \"yield\": 95.8}, {\"line\": \"第3製造ライン\", \"yield\": 95.7}], \"improvement_actions\": [\"温度管理強化\", \"工具寿命管理改善\"]}",
+    "file_path": "/reports/quality/2024_03_quality_analysis.pdf",
+    "generated_at": "2024-03-14T16:30:00Z",
+    "created_at": "2024-03-14T16:30:00Z"
+  },
+  {
+    "report_id": 3,
+    "created_by_user_id": 4,
+    "report_type": "保全実績レポート",
+    "title": "2024年2月 保全作業実績レポート",
+    "description": "月次保全作業の実績、コスト分析、効果測定レポート",
+    "period_start": "2024-02-01T00:00:00Z",
+    "period_end": "2024-02-29T23:59:59Z",
+    "report_data": "{\"maintenance_summary\": {\"total_works\": 15, \"planned_works\": 12, \"emergency_works\": 3, \"total_cost\": 125000}, \"equipment_reliability\": {\"mtbf_improvement\": 8.5, \"mttr_reduction\": 15.2}, \"cost_analysis\": {\"parts_cost\": 75000, \"labor_cost\": 50000}, \"recommendations\": [\"予知保全拡大\", \"部品在庫最適化\"]}",
+    "file_path": "/reports/maintenance/2024_02_maintenance_summary.pdf",
+    "generated_at": "2024-03-01T09:00:00Z",
+    "created_at": "2024-03-01T09:00:00Z"
+  },
+  {
+    "report_id": 4,
+    "created_by_user_id": 2,
+    "report_type": "エネルギー消費レポート",
+    "title": "2024年3月第1週 エネルギー使用量分析",
+    "description": "工場全体のエネルギー消費分析、省エネ効果測定、改善提案レポート",
+    "period_start": "2024-03-04T00:00:00Z",
+    "period_end": "2024-03-10T23:59:59Z",
+    "report_data": "{\"energy_summary\": {\"total_consumption\": 12500, \"electricity\": 10200, \"gas\": 2300}, \"efficiency_metrics\": {\"energy_per_unit\": 2.8, \"baseline_comparison\": -5.2}, \"equipment_consumption\": [{\"equipment\": \"CNC設備\", \"consumption\": 4200}, {\"equipment\": \"ユーティリティ\", \"consumption\": 3800}], \"savings_opportunities\": [\"待機時電力削減\", \"高効率モーター導入\"]}",
+    "file_path": "/reports/energy/2024_W10_energy_analysis.pdf",
+    "generated_at": "2024-03-11T10:30:00Z",
+    "created_at": "2024-03-11T10:30:00Z"
+  },
+  {
+    "report_id": 5,
+    "created_by_user_id": 1,
+    "report_type": "AI予測精度レポート",
+    "title": "2024年2月 AI予測モデル性能評価レポート",
+    "description": "各種AI予測モデルの精度評価、改善提案、モデル更新計画レポート",
+    "period_start": "2024-02-01T00:00:00Z",
+    "period_end": "2024-02-29T23:59:59Z",
+    "report_data": "{\"model_performance\": [{\"model\": \"温度予測\", \"accuracy\": 92.5, \"improvement\": 2.1}, {\"model\": \"故障予測\", \"accuracy\": 87.8, \"improvement\": 4.3}], \"prediction_results\": {\"true_positives\": 18, \"false_positives\": 3, \"false_negatives\": 2}, \"model_updates\": [\"データセット拡張\", \"ハイパーパラメータ調整\"], \"business_impact\": {\"downtime_reduction\": 12.5, \"maintenance_cost_saving\": 8.3}}",
+    "file_path": "/reports/ai/2024_02_ai_model_evaluation.pdf",
+    "generated_at": "2024-03-01T14:00:00Z",
+    "created_at": "2024-03-01T14:00:00Z"
+  }
+]
