@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "serve": "vue-cli-service serve"
+    "serve": "vue-cli-service serve",
+    "start": "npm run serve",
+    "lint": "echo 'Linting placeholder - add eslint configuration as needed'",
+    "test": "echo 'Testing placeholder - add test framework as needed'"
   },
   "dependencies": {
     "vue": "^3.4.0",
