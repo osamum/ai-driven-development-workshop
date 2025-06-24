@@ -1,0 +1,62 @@
+[
+  {
+    "id": "eq1",
+    "equipment_id": 1,
+    "group_id": 1,
+    "equipment_name": "CNC加工機A1",
+    "equipment_type": "CNC加工機",
+    "model_number": "CNC-1000X",
+    "serial_number": "CNC1000X-001",
+    "manufacturer": "マキノ精機",
+    "installation_date": "2023-06-15",
+    "location": "工場棟A-1F-001",
+    "status": "稼働中",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-06-24T05:00:00Z"
+  },
+  {
+    "id": "eq2",
+    "equipment_id": 2,
+    "group_id": 1,
+    "equipment_name": "搬送ロボット1",
+    "equipment_type": "搬送ロボット",
+    "model_number": "ROBOT-500",
+    "serial_number": "ROBOT500-001",
+    "manufacturer": "安川電機",
+    "installation_date": "2023-08-10",
+    "location": "工場棟A-1F-002",
+    "status": "稼働中",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-06-24T05:00:00Z"
+  },
+  {
+    "id": "eq3",
+    "equipment_id": 3,
+    "group_id": 2,
+    "equipment_name": "プレス機B1",
+    "equipment_type": "プレス機",
+    "model_number": "PRESS-2000",
+    "serial_number": "PRESS2000-001",
+    "manufacturer": "コマツ産機",
+    "installation_date": "2023-04-20",
+    "location": "工場棟B-1F-001",
+    "status": "保守中",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-06-24T05:00:00Z"
+  },
+  {
+    "id": "eq4",
+    "equipment_id": 4,
+    "group_id": 3,
+    "equipment_name": "検査機C1",
+    "equipment_type": "外観検査機",
+    "model_number": "INSPECT-100",
+    "serial_number": "INSPECT100-001",
+    "manufacturer": "キーエンス",
+    "installation_date": "2023-09-05",
+    "location": "工場棟C-1F-001",
+    "status": "稼働中",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-06-24T05:00:00Z"
+  }
+]
