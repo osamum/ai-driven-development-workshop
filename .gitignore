@@ -91,6 +91,16 @@ out
 .nuxt
 dist
 
+# Vue.js build output
+dist/
+.DS_Store
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and not Next.js
