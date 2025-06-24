@@ -207,6 +207,37 @@ class FactoryManagementApiService {
       clearInterval(intervalId);
     }
   }
+
+  // AI Chat 機能
+
+  async sendChatMessage(message, sessionId = 'default') {
+    const response = await fetch(`${this.baseUrls.nodejs}/api/ai/chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: message,
+        sessionId: sessionId
+      })
+    });
+    if (!response.ok) {
+      throw new Error(`エラー: ${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+  }
+
+  async getChatHistory(sessionId = 'default', limit = 20) {
+    const params = new URLSearchParams({
+      sessionId: sessionId,
+      limit: limit.toString()
+    });
+    const response = await fetch(`${this.baseUrls.nodejs}/api/ai/chat/history?${params}`);
+    if (!response.ok) {
+      throw new Error(`エラー: ${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+  }
 }
 
 // Vue.js での使用例
