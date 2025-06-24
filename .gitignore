@@ -138,3 +138,18 @@ dist/
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Azure Functions - ビルド成果物・一時ファイル除外設定
+
+# C# Functions
+azure-functions/csharp-functions/bin/
+azure-functions/csharp-functions/obj/
+
+# Python Functions
+azure-functions/python-functions/__pycache__/
+azure-functions/python-functions/.python_packages/
+azure-functions/python-functions/.venv/
+
+# Azure Functions 共通
+azure-functions/*/.azure/
+azure-functions/*/.azurefunctions/
