@@ -259,6 +259,42 @@ app.http('health-check', {
 // チャット履歴を保存するための簡単なメモリストレージ
 let chatHistory = [];
 
+// Function Calling用の関数定義
+const availableFunctions = {
+    get_current_time: () => {
+        const now = new Date();
+        return {
+            current_time: now.toISOString(),
+            formatted_time: now.toLocaleString('ja-JP', {
+                timeZone: 'Asia/Tokyo',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            }),
+            timestamp: now.getTime()
+        };
+    }
+};
+
+// Function Callingのスキーマ定義
+const functionSchemas = [
+    {
+        type: "function",
+        function: {
+            name: "get_current_time",
+            description: "現在の日時を取得します。ユーザーが時刻や日付を知りたい場合に使用してください。",
+            parameters: {
+                type: "object",
+                properties: {},
+                required: []
+            }
+        }
+    }
+];
+
 // Azure OpenAI クライアントの初期化
 function getOpenAIClient() {
     const apiKey = process.env.AZURE_OPENAI_API_KEY;
@@ -314,7 +350,7 @@ app.http('ai-chat', {
                 const messages = [
                     {
                         role: 'system',
-                        content: 'あなたは工場設備管理システムのアシスタントです。設備の状況、保全、効率化に関する質問に親切に答えてください。'
+                        content: 'あなたは工場設備管理システムのアシスタントです。設備の状況、保全、効率化に関する質問に親切に答えてください。現在の時刻が必要な場合は、get_current_time関数を使用してください。'
                     },
                     ...sessionHistory.map(chat => ([
                         { role: 'user', content: chat.userMessage },
@@ -326,11 +362,57 @@ app.http('ai-chat', {
                 const completion = await client.chat.completions.create({
                     model: process.env.AZURE_OPENAI_DEPLOYMENT_NAME || 'gpt-35-turbo',
                     messages: messages,
+                    tools: functionSchemas,
+                    tool_choice: "auto",
                     max_tokens: 500,
                     temperature: 0.7
                 });
 
-                aiResponse = completion.choices[0].message.content;
+                const choice = completion.choices[0];
+                const responseMessage = choice.message;
+
+                // Function Callingが必要かチェック
+                if (responseMessage.tool_calls && responseMessage.tool_calls.length > 0) {
+                    context.log('Function Calling が検出されました');
+                    
+                    // 元のアシスタントメッセージを履歴に追加
+                    messages.push(responseMessage);
+                    
+                    // 各 tool call を処理
+                    for (const toolCall of responseMessage.tool_calls) {
+                        const functionName = toolCall.function.name;
+                        const functionArguments = JSON.parse(toolCall.function.arguments || '{}');
+                        
+                        context.log(`関数呼び出し: ${functionName}`);
+                        
+                        // 関数を実行
+                        let functionResult;
+                        if (availableFunctions[functionName]) {
+                            functionResult = availableFunctions[functionName](functionArguments);
+                        } else {
+                            functionResult = { error: `未知の関数: ${functionName}` };
+                        }
+                        
+                        // 関数の結果をメッセージに追加
+                        messages.push({
+                            tool_call_id: toolCall.id,
+                            role: "tool",
+                            content: JSON.stringify(functionResult)
+                        });
+                    }
+                    
+                    // 関数の結果を含めて再度AIに問い合わせ
+                    const secondCompletion = await client.chat.completions.create({
+                        model: process.env.AZURE_OPENAI_DEPLOYMENT_NAME || 'gpt-35-turbo',
+                        messages: messages,
+                        max_tokens: 500,
+                        temperature: 0.7
+                    });
+                    
+                    aiResponse = secondCompletion.choices[0].message.content;
+                } else {
+                    aiResponse = responseMessage.content;
+                }
 
             } catch (openAIError) {
                 context.log(`Azure OpenAI API エラー: ${openAIError.message}`);
