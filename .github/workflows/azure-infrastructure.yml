@@ -1,0 +1,142 @@
+name: Azure Infrastructure Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      prefix:
+        description: 'リソース名のプリフィックス (例: mycompany)'
+        required: true
+        default: 'factory'
+      environment:
+        description: '環境 (dev/staging/prod)'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+        - dev
+        - staging
+        - prod
+      deploy_cosmos_db:
+        description: 'Cosmos DB をデプロイするか'
+        required: true
+        default: true
+        type: boolean
+      deploy_sql_db:
+        description: 'SQL Database をデプロイするか'
+        required: true
+        default: true
+        type: boolean
+
+env:
+  AZURE_LOCATION: 'japaneast'
+
+jobs:
+  deploy-infrastructure:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: チェックアウト
+      uses: actions/checkout@v4
+
+    - name: Azure ログイン
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure CLI バージョン確認
+      run: az --version
+
+    - name: リソースグループとApp Service のデプロイ
+      run: |
+        chmod +x ./azure-deploy.sh
+        ./azure-deploy.sh ${{ github.event.inputs.prefix }} ${{ github.event.inputs.environment }}
+
+    - name: Cosmos DB のデプロイ (オプション)
+      if: ${{ github.event.inputs.deploy_cosmos_db == 'true' }}
+      run: |
+        RESOURCE_GROUP="${{ github.event.inputs.prefix }}-factory-management-${{ github.event.inputs.environment }}-rg"
+        COSMOSDB_ACCOUNT="${{ github.event.inputs.prefix }}-factory-cosmosdb-${{ github.event.inputs.environment }}"
+        
+        echo "Cosmos DB アカウントを作成しています..."
+        az cosmosdb create \
+          --name $COSMOSDB_ACCOUNT \
+          --resource-group $RESOURCE_GROUP \
+          --kind GlobalDocumentDB \
+          --locations regionName=${{ env.AZURE_LOCATION }} failoverPriority=0 isZoneRedundant=False \
+          --default-consistency-level "Session" \
+          --enable-automatic-failover true \
+          --enable-multiple-write-locations false
+        
+        echo "Cosmos DB データベースを作成しています..."
+        az cosmosdb sql database create \
+          --account-name $COSMOSDB_ACCOUNT \
+          --resource-group $RESOURCE_GROUP \
+          --name FactoryManagementDB
+
+    - name: SQL Database のデプロイ (オプション)
+      if: ${{ github.event.inputs.deploy_sql_db == 'true' }}
+      run: |
+        RESOURCE_GROUP="${{ github.event.inputs.prefix }}-factory-management-${{ github.event.inputs.environment }}-rg"
+        SQL_SERVER="${{ github.event.inputs.prefix }}-factory-sql-${{ github.event.inputs.environment }}"
+        
+        echo "SQL Server を作成しています..."
+        az sql server create \
+          --name $SQL_SERVER \
+          --resource-group $RESOURCE_GROUP \
+          --location ${{ env.AZURE_LOCATION }} \
+          --admin-user sqladmin \
+          --admin-password "${{ secrets.SQL_ADMIN_PASSWORD }}"
+        
+        echo "SQL Database を作成しています..."
+        az sql db create \
+          --server $SQL_SERVER \
+          --resource-group $RESOURCE_GROUP \
+          --name FactoryManagementDB \
+          --service-objective S1
+        
+        echo "ファイアウォール規則を設定しています..."
+        az sql server firewall-rule create \
+          --server $SQL_SERVER \
+          --resource-group $RESOURCE_GROUP \
+          --name AllowAzureServices \
+          --start-ip-address 0.0.0.0 \
+          --end-ip-address 0.0.0.0
+
+    - name: 発行プロファイルの生成とSecrets更新
+      run: |
+        APP_NAME="${{ github.event.inputs.prefix }}-factory-management-${{ github.event.inputs.environment }}"
+        RESOURCE_GROUP="${{ github.event.inputs.prefix }}-factory-management-${{ github.event.inputs.environment }}-rg"
+        
+        echo "発行プロファイルを生成しています..."
+        PUBLISH_PROFILE=$(az webapp deployment list-publishing-profiles \
+          --name $APP_NAME \
+          --resource-group $RESOURCE_GROUP \
+          --xml)
+        
+        echo "::add-mask::$PUBLISH_PROFILE"
+        echo "PUBLISH_PROFILE=$PUBLISH_PROFILE" >> $GITHUB_ENV
+        
+        echo "📋 次の手順:"
+        echo "1. GitHub Secretsに以下を設定してください:"
+        echo "   - AZURE_WEBAPP_NAME_${{ github.event.inputs.environment | upper }}: $APP_NAME"
+        echo "   - AZURE_WEBAPP_PUBLISH_PROFILE_${{ github.event.inputs.environment | upper }}: <発行プロファイル>"
+        echo "2. アプリケーションのデプロイを実行してください"
+
+    - name: デプロイ結果のサマリー
+      run: |
+        echo "🎉 インフラストラクチャのデプロイが完了しました!"
+        echo ""
+        echo "📋 作成されたリソース:"
+        echo "  - リソースグループ: ${{ github.event.inputs.prefix }}-factory-management-${{ github.event.inputs.environment }}-rg"
+        echo "  - Web App: ${{ github.event.inputs.prefix }}-factory-management-${{ github.event.inputs.environment }}"
+        echo "  - Storage Account: ${{ github.event.inputs.prefix }}factory${{ github.event.inputs.environment }}"
+        echo "  - Key Vault: ${{ github.event.inputs.prefix }}-factory-kv-${{ github.event.inputs.environment }}"
+        echo "  - Application Insights: ${{ github.event.inputs.prefix }}-factory-insights-${{ github.event.inputs.environment }}"
+        if [ "${{ github.event.inputs.deploy_cosmos_db }}" = "true" ]; then
+          echo "  - Cosmos DB: ${{ github.event.inputs.prefix }}-factory-cosmosdb-${{ github.event.inputs.environment }}"
+        fi
+        if [ "${{ github.event.inputs.deploy_sql_db }}" = "true" ]; then
+          echo "  - SQL Server: ${{ github.event.inputs.prefix }}-factory-sql-${{ github.event.inputs.environment }}"
+        fi
+        echo ""
+        echo "🌐 Web App URL: https://${{ github.event.inputs.prefix }}-factory-management-${{ github.event.inputs.environment }}.azurewebsites.net"

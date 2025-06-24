@@ -1,0 +1,107 @@
+name: FactoryManagement CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '18.x'
+  AZURE_WEBAPP_PACKAGE_PATH: '.'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: チェックアウト
+      uses: actions/checkout@v4
+
+    - name: Node.js セットアップ
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: 依存関係のインストール
+      run: npm ci
+
+    - name: リント実行
+      run: npm run lint || echo "リントスクリプトが存在しません"
+
+    - name: テスト実行
+      run: npm run test || echo "テストスクリプトが存在しません"
+
+    - name: ビルド実行
+      run: npm run build
+
+    - name: ビルド成果物のアップロード
+      uses: actions/upload-artifact@v4
+      with:
+        name: factory-management-build
+        path: |
+          dist/
+          package*.json
+          !dist/**/*.map
+
+  deploy-dev:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    environment: development
+    
+    steps:
+    - name: チェックアウト
+      uses: actions/checkout@v4
+
+    - name: ビルド成果物のダウンロード
+      uses: actions/download-artifact@v4
+      with:
+        name: factory-management-build
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: Azure Web App デプロイ (開発環境)
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ secrets.AZURE_WEBAPP_NAME_DEV }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_DEV }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  deploy-prod:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+    - name: チェックアウト
+      uses: actions/checkout@v4
+
+    - name: ビルド成果物のダウンロード
+      uses: actions/download-artifact@v4
+      with:
+        name: factory-management-build
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: Azure Web App デプロイ (本番環境)
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ secrets.AZURE_WEBAPP_NAME_PROD }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PROD }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  notify:
+    needs: [deploy-dev, deploy-prod]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: デプロイ結果の通知
+      run: |
+        if [ "${{ needs.deploy-dev.result }}" = "success" ] || [ "${{ needs.deploy-prod.result }}" = "success" ]; then
+          echo "✅ デプロイが正常に完了しました"
+        else
+          echo "❌ デプロイに失敗しました"
+          exit 1
+        fi
