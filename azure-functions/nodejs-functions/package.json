@@ -1,0 +1,16 @@
+{
+  "name": "factory-management-nodejs-functions",
+  "version": "1.0.0",
+  "description": "工場設備管理システム - Node.js Functions",
+  "main": "index.js",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@azure/functions": "^4.5.0"
+  },
+  "devDependencies": {
+    "azure-functions-core-tools": "^4.0.5611"
+  }
+}
